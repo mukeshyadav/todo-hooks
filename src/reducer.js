@@ -1,4 +1,4 @@
-import { act } from "react-dom/test-utils"
+
 
 export default function reducer (state, action) {
   switch (action.type) {
@@ -7,7 +7,14 @@ export default function reducer (state, action) {
       return {
         ...state, todos: toggleTodos
       }
-      break
+      
+    case "REMOVE_TODO":
+      const filterTodos = state.todos.filter(t => t.id !== action.payload.id);
+      return {
+        ...state,
+        todos: filterTodos
+      }
+      
     default:
       return state
   }
