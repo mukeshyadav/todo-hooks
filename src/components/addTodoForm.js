@@ -1,37 +1,35 @@
-import React, { useState, useEffect, useContext } from "react";
-import TodosContext from "../context.js";
+import React, { useState, useEffect, useContext } from 'react'
+import TodosContext from '../context.js'
 
-export default function AddTodoForm() {
-  const [todo, addTodo] = useState("");
-  const {
-    state: { currentTodo = {} },
-    dispatch,
-  } = useContext(TodosContext);
+export default function AddTodoForm () {
+  const [todo, addTodo] = useState('')
+  const {state: { currentTodo = {} }, dispatch} = useContext(TodosContext)
 
   useEffect(() => {
     if (currentTodo.text) {
-      addTodo(currentTodo.text);
+      addTodo(currentTodo.text)
+    } else {
+      addTodo('')
     }
-  }, [currentTodo.id]);
+  }, [currentTodo.id])
 
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
     if (currentTodo.text) {
-      dispatch({ type: "UPDATE_TODO", payload: todo });
+      dispatch({ type: 'UPDATE_TODO', payload: todo })
     } else {
-      dispatch({ type: "ADD_TODO", payload: todo });
+      dispatch({ type: 'ADD_TODO', payload: todo })
     }
-    addTodo("");
-  };
+    addTodo('')
+  }
 
   return (
-    <form className="flex justify-center p-5" onSubmit={handleSubmit}>
+    <form className='flex justify-center p-5' onSubmit={handleSubmit}>
       <input
-        type="text"
-        className="border-gray-600 border-solid border-2"
+        type='text'
+        className='border-gray-600 border-solid border-2'
         value={todo}
-        onChange={(event) => addTodo(event.target.value)}
-      />
+        onChange={event => addTodo(event.target.value)} />
     </form>
-  );
+  )
 }
