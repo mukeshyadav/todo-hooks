@@ -1,12 +1,10 @@
-import uuidv4 from "uuid/v4";
-
 export default function reducer(state, action) {
   switch (action.type) {
     case "GET_TODOS":
       return {
         ...state,
-        todos: action.payload
-      }
+        todos: action.payload,
+      };
     case "TOGGLE_TODO":
       const toggleTodos = state.todos.map((t) =>
         t.id === action.payload.id
@@ -20,7 +18,8 @@ export default function reducer(state, action) {
 
     case "REMOVE_TODO":
       const filterTodos = state.todos.filter((t) => t.id !== action.payload.id);
-      const isRemovedTodo = state.currentTodo.id === action.payload.id ? {} : state.currentTodo;
+      const isRemovedTodo =
+        state.currentTodo.id === action.payload.id ? {} : state.currentTodo;
       return {
         ...state,
         currentTodo: isRemovedTodo,
@@ -28,18 +27,14 @@ export default function reducer(state, action) {
       };
 
     case "ADD_TODO":
-      if(!action.payload){
-        return state
-      }
-      if(state.todos.findIndex(t => t.text === action.payload) > -1){
-        return state
-      }
-      const newTodo = {
-        id: uuidv4(),
-        text: action.payload,
-        complete: false,
-      };
-      const addedTodos = [...state.todos, newTodo];
+      // if (!action.payload) {
+      //   return state;
+      // }
+      // if (state.todos.findIndex((t) => t.text === action.payload) > -1) {
+      //   return state;
+      // }
+      console.log(action.payload);
+      const addedTodos = [...state.todos, action.payload];
       return {
         ...state,
         todos: addedTodos,
@@ -51,11 +46,11 @@ export default function reducer(state, action) {
       };
     case "UPDATE_TODO":
       const updatedTodo = { ...state.currentTodo, text: action.payload };
-      if(!action.payload){
-        return state
+      if (!action.payload) {
+        return state;
       }
-      if(state.todos.findIndex(t => t.text === action.payload) > -1){
-        return state
+      if (state.todos.findIndex((t) => t.text === action.payload) > -1) {
+        return state;
       }
       const updatedTodoIndex = state.todos.findIndex(
         (t) => t.id === state.currentTodo.id
