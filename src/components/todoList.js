@@ -41,7 +41,15 @@ export default function TodoList() {
               />
             </button>
             <button
-              onClick={() => dispatch({ type: "REMOVE_TODO", payload: todo })}
+              onClick={async () => {
+                await fetch(
+                  `https://hooks-api-eight-mu.now.sh/todos/${todo.id}`,
+                  {
+                    method: "DELETE",
+                  }
+                );
+                dispatch({ type: "REMOVE_TODO", payload: todo });
+              }}
             >
               <img
                 src="https://icon.now.sh/delete/8b0000"
