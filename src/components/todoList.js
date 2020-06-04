@@ -23,9 +23,20 @@ export default function TodoList() {
               className={`cursor-pointer flex-1 ml-12 ${
                 todo.complete && "line-through text-gray-900"
               }`}
-              onDoubleClick={() =>
-                dispatch({ type: "TOGGLE_TODO", payload: todo })
-              }
+              onDoubleClick={async () => {
+                await fetch(
+                  `https://hooks-api-eight-mu.now.sh/todos/${todo.id}`,
+                  {
+                    method: "PATCH",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ complete: !todo.complete }),
+                  }
+                )
+                  .then((response) => response.json())
+                  .then((data) =>
+                    dispatch({ type: "TOGGLE_TODO", payload: data })
+                  );
+              }}
             >
               {todo.text}
             </span>

@@ -7,9 +7,7 @@ export default function reducer(state, action) {
       };
     case "TOGGLE_TODO":
       const toggleTodos = state.todos.map((t) =>
-        t.id === action.payload.id
-          ? { ...action.payload, complete: !action.payload.complete }
-          : t
+        t.id === action.payload.id ? action.payload : t
       );
       return {
         ...state,
@@ -45,13 +43,13 @@ export default function reducer(state, action) {
         currentTodo: action.payload,
       };
     case "UPDATE_TODO":
-      const updatedTodo = { ...state.currentTodo, text: action.payload };
-      if (!action.payload) {
-        return state;
-      }
-      if (state.todos.findIndex((t) => t.text === action.payload) > -1) {
-        return state;
-      }
+      const updatedTodo = { ...action.payload };
+      // if (!action.payload) {
+      //   return state;
+      // }
+      // if (state.todos.findIndex((t) => t.text === action.payload) > -1) {
+      //   return state;
+      // }
       const updatedTodoIndex = state.todos.findIndex(
         (t) => t.id === state.currentTodo.id
       );

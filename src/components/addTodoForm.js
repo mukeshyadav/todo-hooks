@@ -20,7 +20,15 @@ export default function AddTodoForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (currentTodo.text) {
-      dispatch({ type: "UPDATE_TODO", payload: todo });
+      await fetch(`https://hooks-api-eight-mu.now.sh/todos/${currentTodo.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          text: todo,
+        }),
+      })
+        .then((response) => response.json())
+        .then((data) => dispatch({ type: "UPDATE_TODO", payload: data }));
     } else {
       await fetch(`https://hooks-api-eight-mu.now.sh/todos`, {
         method: "POST",
